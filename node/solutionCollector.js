@@ -66,7 +66,7 @@ connection.on('ready', function () {
 
         var needPacket = new require('./needPacket')(bestOne);
         needPacket.tickHop();
-        needPacket.touch('Micheal Jackson');
+        needPacket.touch('node.js Solution Collector');
         sendMessage(exchange, needPacket.stringify());
 
       });

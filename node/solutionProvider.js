@@ -32,7 +32,8 @@ connection.on('ready', function () {
             "weight" : Math.floor(Math.random() * 100) + 1,
             "description" :  "Porky is life"
           };
-
+          needPacket.tickHop();
+          needPacket.touch('node.js Solution Provider');
           needPacket.proposeSolution(solution);
           exchange.publish('', needPacket.stringify());
 
