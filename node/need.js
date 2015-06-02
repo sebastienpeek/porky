@@ -12,15 +12,14 @@ connection.on('ready', function () {
   connection.exchange("rapids", { type:'fanout', durable: true, autoDelete: false }, function(exchange) {
 
     var sendMessage = function(exchange, payload) {
-      //console.log('about to publish ');
-      var encoded_payload = JSON.stringify(payload);
-      exchange.publish('', encoded_payload, {});
+      console.log('About to publish: ', payload);
+      exchange.publish('', payload, {});
     }
 
     setInterval( function() {
       var needPacket = new require('./needPacket')();
-      sendMessage(exchange, needPacket.toJSON());
-    }, 5000);
+      sendMessage(exchange, needPacket.stringify());
+    }, 2000);
  })
 
 });

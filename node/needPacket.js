@@ -1,26 +1,25 @@
-/**
- * Need Packet
- * Authors:
- * Piotr Rochala: @rochal / http://github.com/rochal
- * Sebastien Peek: @sebastienpeek / http://github.com/the0rkus
- */
+module.exports = function (msg) {
 
-module.exports = function () {
-	
 	var NEED = "car_rental_offer";
 	var solutions = [];
 
-	var message = {
+	var message = msg || {
 		"json_class" : "NeedPacket",
 		"need": NEED,
 		"solutions": solutions
 	};
 
-	this.toJSON = function () {
-		return JSON.stringify (message);
+	this.stringify = function () {
+		return JSON.stringify(message);
 	};
-	
+
+	this.getMessage = function(){
+		return message;
+	};
+
 	this.proposeSolution = function (solution) {
 		solutions.push(solution);
 	};
+
+	return this;
 };
