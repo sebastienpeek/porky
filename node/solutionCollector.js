@@ -30,7 +30,7 @@ connection.on('ready', function () {
 
         var needPacket = new require('./needPacket')(payload);
 
-        if (needPacket.hasSolutions()) {
+        if (needPacket.hasSolutions() && !needPacket.message.ultimate_solution) {
           var packet = needPacket.getMessage();
           //console.log('Packet with solutions:', packet);
 
@@ -65,6 +65,8 @@ connection.on('ready', function () {
         }
 
         var needPacket = new require('./needPacket')(bestOne);
+        needPacket.tickHop();
+        needPacket.touch('Micheal Jackson');
         sendMessage(exchange, needPacket.stringify());
 
       });
@@ -78,3 +80,4 @@ connection.on('ready', function () {
 connection.on('error', function(e) {
   throw e;
 });
+
