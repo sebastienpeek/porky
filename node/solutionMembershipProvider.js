@@ -1,36 +1,25 @@
-/**
- * Solution Provider
- * Authors:
- * Piotr Rochala: @rochal / http://github.com/rochal
- * Sebastien Peek: @sebastienpeek
- */
-
 var argv = require('minimist')(process.argv.slice(2));
 var connection = new require('./connection')(argv);
 
-var solutionDictionary = { 1: {
+var solutionDictionary = { "Tier 1": {
                             "weight": Math.floor(Math.random() * 100) + 1,
-                            "description": "Is this real life?"
+                            "description": "This is all just a fantasy."
                            }, 
-                           2: {
+                           "Tier 2": {
                             "weight": Math.floor(Math.random() * 100) + 1,
-                            "description": "Where do I belong?"
+                            "description": "When does life become the unknown?"
                            }, 
-                           3: {
+                           "Platinum": {
                             "weight": Math.floor(Math.random() * 100) + 1,
-                            "description": "Are feet just shoes?"
+                            "description": "Where do we go after life?"
                            },
-                           4: {
+                           "Gold": {
                             "weight": Math.floor(Math.random() * 100) + 1,
-                            "description": "Life is life."
+                            "description": "How does when disappear when one is still a solid?"
                            },
-                           5: {
+                           "VIP": {
                             "weight": Math.floor(Math.random() * 100) + 1,
-                            "description": "Node.js is love."
-                           },
-                           6: {
-                            "weight": Math.floor(Math.random() * 100) + 1,
-                            "description": "iOS is life."
+                            "description": "Top tier, you sir/ma'am, deserve a medal of recognition."
                            }  
                          };
 
@@ -52,11 +41,11 @@ connection.on('ready', function () {
 
         var needPacket = new require('./needPacket')(payload);
 
-        if (!needPacket.hasSolutions() && !needPacket.membership_level) {
-          var key = Math.floor(Math.random() * 5) + 1;
-          var solution = solutionDictionary[key];
-          needPacket.proposeSolution(solution);
-          exchange.publish('', needPacket.stringify());
+        if (!needPacket.hasSolutions() && needPacket.membership_level) {
+            var solution = membershipSolutionDictionary[needPacket.membership_level];
+            needPacket.proposeSolution(solution);
+            console.log(needPacket.stringify());
+            exchange.publish('', needPacket.stringify());
         };
       })
     });
