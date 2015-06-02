@@ -1,3 +1,9 @@
+/**
+ * Connection
+ * Authors:
+ * Piotr Rochala: @rochal / http://github.com/rochal
+ * Sebastien Peek: @sebastienpeek / http://github.com/the0rkus
+ */
 
 var amqp = require('amqp');
 

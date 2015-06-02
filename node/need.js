@@ -2,7 +2,7 @@
  * Need Pusher
  * Authors:
  * Piotr Rochala: @rochal / http://github.com/rochal
- * Sebastien Peek: @sebastienpeek
+ * Sebastien Peek: @sebastienpeek / http://github.com/the0rkus
  */
 
 var argv = require('minimist')(process.argv.slice(2));
