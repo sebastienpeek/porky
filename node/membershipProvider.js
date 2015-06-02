@@ -1,5 +1,5 @@
 /**
- * Solved Queue Monitor 
+ * Membership Provider
  * Authors:
  * Piotr Rochala: @rochal / http://github.com/rochal
  * Sebastien Peek: @sebastienpeek
@@ -7,6 +7,8 @@
 
 var argv = require('minimist')(process.argv.slice(2));
 var connection = new require('./connection')(argv);
+
+var membership_levels = ["Tier 1", "Tier 2", "Platinum", "Gold", "VIP"];
 
 connection.on('ready', function () {
   console.log('Connected to queue...')
@@ -24,13 +26,17 @@ connection.on('ready', function () {
         var encoded_payload = unescape(message.data);
         var payload = JSON.parse(encoded_payload);
 
-        var needPacket = new require('./needPacket')(payload);
+        if (payload.user_id && 
+          payload.solutions.length < 1 
+          && !payload.membership_level) {
 
-        if (needPacket.getMessage().ultimate_solution) {
-            console.log(needPacket.getMessage());  
+          payload.membership_level = membership_levels[payload.user_id - 1];
+          var needPacket = new require('./needPacket')(payload);
+
+          exchange.publish('', needPacket.stringify());
+
         };
-
-      })
+      });
     });
  });
 });
