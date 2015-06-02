@@ -9,7 +9,8 @@ module.exports = function (msg) {
 		"need": NEED,
 		"solutions": [],
 		"user_id": Math.floor(Math.random() * 5) + 1,
-		"id" : uuid
+		"id" : uuid,
+		"ultimate_solution": false
 	};
 
 	this.id = message.id;
