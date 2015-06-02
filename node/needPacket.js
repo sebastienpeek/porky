@@ -8,8 +8,10 @@ module.exports = function (msg) {
 		"json_class" : "RentalOfferNeedPacket",
 		"need": NEED,
 		"solutions": [],
-		"_id" : uuid
+		"id" : uuid
 	};
+
+	this.id = message.id;
 
 	this.stringify = function () {
 		return JSON.stringify(message);
@@ -21,6 +23,10 @@ module.exports = function (msg) {
 
 	this.proposeSolution = function (solution) {
 		message.solutions.push(solution);
+	};
+
+	this.hasSolutions = function() {
+		return message.solutions.length > 0;
 	};
 
 	return this;
