@@ -31,41 +31,50 @@ connection.on('ready', function () {
         var needPacket = new require('./needPacket')(payload);
 
         if (needPacket.hasSolutions()) {
-          console.log('Packet with solutions:', needPacket.getMessage());
+          var packet = needPacket.getMessage();
+          //console.log('Packet with solutions:', packet);
 
-          if (!SOLUTIONS[needPacket._id]) {
-            SOLUTIONS[needPacket._id] = [];
+          if (!SOLUTIONS[packet.id]) {
+            SOLUTIONS[packet.id] = packet;
           } else {
-            SOLUTIONS[needPacket._id].push(needPacket);
+            SOLUTIONS[packet.id].solutions = _.merge(SOLUTIONS[packet.id].solutions, packet.solutions)
           }
         }
 
-        console.log('Recieved a message:', needPacket);
       });
     });
+
+    function getBestSolution(packet) {
+      var bestSolution = _.max(packet.solutions, function(b){ return b.weight; });
+      packet.solutions = [bestSolution];
+      return packet;
+    }
+
+    setInterval(function(){
+
+      _.each(SOLUTIONS, function(packet) {
+
+        console.log('Finding best solutions out of', packet.solutions.length, 'weights are', _.pluck(packet.solutions, 'weight'));
+        var bestOne = getBestSolution(packet);
+        bestOne.ultimate_solution = true;
+        console.log('Found best one with weight: ', bestOne.solutions[0].weight);
+
+        var sendMessage = function(exchange, payload) {
+          //console.log('About to publish: ', payload);
+          exchange.publish('', payload, {});
+        }
+
+        var needPacket = new require('./needPacket')(bestOne);
+        sendMessage(exchange, needPacket.stringify());
+
+      });
+
+    }, 5000);
+
+
  });
 });
 
 connection.on('error', function(e) {
   throw e;
 });
-
-function getBestSolution(solutions) {
-  return _.max(solutions, function(s){
-    return s.weight;
-  });
-}
-
-
-setInterval(function(){
-  console.log('Checking best solutions...');
-
-  _.each(SOLUTIONS, function(solutionsPerNeed) {
-
-    var bestOne = getBestSolution(solutionsPerNeed);
-
-    console.log('Found best one which is #', bestOne.weight, 'out of', _.pluck(solutionsPerNeed, 'weight'));
-
-  });
-
-}, 5000);
