@@ -15,5 +15,5 @@ module.exports = function () {
 	
 	this.proposeSolution = function (solution) {
 		solutions.push(solution);
-	}
+	};
 };

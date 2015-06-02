@@ -18,7 +18,7 @@ connection.on('ready', function () {
     }
 
     setInterval( function() {
-      var needPacket = new needPacket('./needPacket');
+      var needPacket = new require('./needPacket')();
       sendMessage(exchange, needPacket.toJSON());
     }, 5000);
  })
