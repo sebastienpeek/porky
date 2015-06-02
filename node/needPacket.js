@@ -30,7 +30,11 @@ module.exports = function (msg) {
 	};
 
 	this.hasSolutions = function() {
-		return message.solutions.length > 0;
+		if (message.solutions) {
+			return message.solutions.length > 0;
+		} else {
+			return false;
+		}
 	};
 
 	this.tickHop = function() {

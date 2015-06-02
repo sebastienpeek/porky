@@ -51,10 +51,13 @@ connection.on('ready', function () {
         var payload = JSON.parse(encoded_payload);
 
         var needPacket = new require('./needPacket')(payload);
-
+        
         if (!needPacket.hasSolutions() && !needPacket.membership_level) {
           var key = Math.floor(Math.random() * 5) + 1;
           var solution = solutionDictionary[key];
+          
+          needPacket.tickHop();
+          needPacket.touch('node.js Solution Provider');
           needPacket.proposeSolution(solution);
           exchange.publish('', needPacket.stringify());
         };
