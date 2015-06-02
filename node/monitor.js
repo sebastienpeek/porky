@@ -9,6 +9,7 @@ var argv = require('minimist')(process.argv.slice(2));
 var connection = new require('./connection')(argv);
 
 connection.on('ready', function () {
+  console.log('Connected to queue...')
   connection.exchange("rapids", { type:'fanout', durable: true, autoDelete: false }, function(exchange) {
 
     // Recieve messages
@@ -23,8 +24,10 @@ connection.on('ready', function () {
         var encoded_payload = unescape(message.data);
         var payload = JSON.parse(encoded_payload);
 
+        var needPacket = new require('./needPacket')(payload);
+
         //console.log('Recieved a message:');
-        console.log(payload);
+        console.log(needPacket.getMessage());
       })
     });
  });
