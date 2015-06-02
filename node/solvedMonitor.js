@@ -26,9 +26,8 @@ connection.on('ready', function () {
 
         var needPacket = new require('./needPacket')(payload);
 
-        //console.log('Recieved a message:');
-        if (needPacket.ultimate_solution) {
-          console.log(needPacket.getMessage());  
+        if (needPacket.getMessage().ultimate_solution) {
+            console.log(needPacket.getMessage());  
         };
 
       })
