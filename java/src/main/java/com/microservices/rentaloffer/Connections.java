@@ -13,7 +13,7 @@ public class Connections implements AutoCloseable {
     protected static final Logger logger = LoggerFactory.getLogger(Connection.class);
     protected final Channel channel;
     protected final QueueingConsumer consumer;
-    protected final String amqpUrl = "192.168.0.52/porky";
+    protected final String amqpUrl;
     protected final String queue = "";
     protected final String exchange = "rapids";
     protected final String exchangeType = "fanout";
