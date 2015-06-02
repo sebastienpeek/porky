@@ -1,5 +1,5 @@
 /**
- * Queue Monitor
+ * Need Pusher
  * Authors:
  * Piotr Rochala: @rochal / http://github.com/rochal
  * Sebastien Peek: @sebastienpeek
@@ -17,14 +17,9 @@ connection.on('ready', function () {
       exchange.publish('', encoded_payload, {});
     }
 
-    var solutions = [];
-
     setInterval( function() {
-      var needPacket = {
-        "need": "car_rental_offer",
-        "solutions": solutions
-      };
-      sendMessage(exchange, needPacket);
+      var needPacket = new needPacket('./needPacket');
+      sendMessage(exchange, needPacket.toJSON());
     }, 5000);
  })
 
