@@ -5,7 +5,7 @@ module.exports = function (msg) {
 	var uuid = require('uuid').v4();
 
 	var message = msg || {
-		"json_class" : "NeedPacket",
+		"json_class" : "RentalOfferNeedPacket",
 		"need": NEED,
 		"solutions": [],
 		"_id" : uuid
