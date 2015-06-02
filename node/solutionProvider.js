@@ -26,24 +26,17 @@ connection.on('ready', function () {
 
         var needPacket = new require('./needPacket')(payload);
 
-        var solution = {
-          "weight" : Math.floor(Math.random() * 10) + 1
+        if (!needPacket.hasSolutions()) {
+
+          var solution = {
+            "weight" : Math.floor(Math.random() * 100) + 1,
+            "description" :  "Porky is life"
+          };
+
+          needPacket.proposeSolution(solution);
+          exchange.publish('', needPacket.stringify());
+
         };
-
-        needPacket.proposeSolution(solution);
-
-        console.log(needPacket.stringify());
-
-        // var sendMessage = function(exchange, payload) {
-        //   console.log('About to publish: ', payload);
-        //   exchange.publish('', payload, {});
-        // }
-
-        // setInterval( function() {
-        //   console.log('Provider providing: ', needPacket.stringify());
-        //   sendMessage(exchange, needPacket.stringify());
-        // }, 2000);
-
       })
     });
  });

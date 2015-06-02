@@ -8,6 +8,7 @@ module.exports = function (msg) {
 		"json_class" : "RentalOfferNeedPacket",
 		"need": NEED,
 		"solutions": [],
+		"user_id": Math.floor(Math.random() * 100) + 1,
 		"id" : uuid
 	};
 
