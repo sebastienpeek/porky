@@ -30,7 +30,7 @@ connection.on('ready', function () {
 
         var needPacket = new require('./needPacket')(payload);
 
-        if (needPacket.hasSolutions() && !needPacket.message.ultimate_solution) {
+        if (needPacket.hasSolutions() && !needPacket.getMessage().ultimate_solution) {
           var packet = needPacket.getMessage();
           //console.log('Packet with solutions:', packet);
 
