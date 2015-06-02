@@ -1,22 +1,12 @@
 /**
+ * Queue Monitor
  * Authors:
  * Piotr Rochala: @rochal / http://github.com/rochal
  * Sebastien Peek: @sebastienpeek
  */
 
 var argv = require('minimist')(process.argv.slice(2));
-
-var amqp = require('amqp');
-
-var BUS_NAME = argv.b;
-var HOST_NAME = argv.h;
-
-var connection = amqp.createConnection({
-  host: HOST_NAME,
-  login: BUS_NAME,
-  password: BUS_NAME,
-  vhost: BUS_NAME
-});
+var connection = new require('./connection')(argv);
 
 connection.on('ready', function () {
   connection.exchange("rapids", { type:'fanout', durable: true, autoDelete: false }, function(exchange) {
