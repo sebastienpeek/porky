@@ -10,7 +10,9 @@ module.exports = function (msg) {
 		"solutions": [],
 		"user_id": Math.floor(Math.random() * 5) + 1,
 		"id" : uuid,
-		"ultimate_solution": false
+		"ultimate_solution": false,
+		"hop_count": 0,
+		"touched_by": []
 	};
 
 	this.id = message.id;
@@ -29,6 +31,17 @@ module.exports = function (msg) {
 
 	this.hasSolutions = function() {
 		return message.solutions.length > 0;
+	};
+
+	this.tickHop = function() {
+		message.hop_count++;
+	};
+
+	this.touch = function(name) {
+		if (!message.touched_by) {
+			message.touched_by = [];
+		}
+		message.touched_by.push(name);
 	};
 
 	return this;
